@@ -23,6 +23,7 @@ public class Task {
         this.status = status;
     }
 
+
     public String getId() {
         return id;
     }
@@ -47,6 +48,8 @@ public class Task {
         return status;
     }
 
+
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -65,5 +68,17 @@ public class Task {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", dueDate=" + dueDate +
+                ", priority=" + priority +
+                ", status=" + status +
+                '}';
     }
 }

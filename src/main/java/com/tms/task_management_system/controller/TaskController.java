@@ -71,15 +71,21 @@ public class TaskController {
             @RequestParam(required = false) Status status,
             @RequestParam(required = false) Priority priority,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+            @RequestParam(required = false) String sortBy
     ) {
-        logger.info("Listing tasks with filters - status: {}, priority: {}, from: {}, to: {}", status, priority, fromDate, toDate);
+        logger.info("Listing tasks with filters - status: {}, priority: {}, from: {}, to: {}, sortBy: {}",
+                status, priority, fromDate, toDate, sortBy);
+
         List<Task> tasks = taskService.listTasks(
                 Optional.ofNullable(status),
                 Optional.ofNullable(priority),
                 Optional.ofNullable(fromDate),
-                Optional.ofNullable(toDate)
+                Optional.ofNullable(toDate),
+                Optional.ofNullable(sortBy)
         );
+
         return ResponseEntity.ok(tasks);
     }
+
 }

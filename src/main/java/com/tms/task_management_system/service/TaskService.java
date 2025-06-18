@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public interface TaskService {
@@ -17,5 +18,7 @@ public interface TaskService {
 
     boolean deleteTask(String id);
 
-    List<Task> listTasks(Optional<Status> status, Optional<Priority> priority, Optional<LocalDate> fromDate, Optional<LocalDate> toDate);
+    List<Task> listTasks(Optional<Status> status, Optional<Priority> priority,
+                         Optional<LocalDate> fromDate, Optional<LocalDate> toDate,
+                         Optional<String> sortBy);
 }
