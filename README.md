@@ -1,7 +1,7 @@
 # 📝 Task Management System - Java Spring Boot
 
-![Java](https://img.shields.io/badge/Java-11+-brightgreen?logo=java)  
-![Spring Boot](https://img.shields.io/badge/Spring--Boot-2.7.6-blue?logo=springboot)
+![Java](https://img.shields.io/badge/Java-17+-brightgreen?logo=java)  
+![Spring Boot](https://img.shields.io/badge/Spring--Boot-3.3.12-blue?logo=springboot)
 ![Swagger](https://img.shields.io/badge/API-Documented-orange?logo=swagger)
 ![JUnit](https://img.shields.io/badge/Tested-JUnit5-yellow)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
