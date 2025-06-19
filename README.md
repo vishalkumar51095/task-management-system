@@ -170,11 +170,3 @@ http://localhost:8080/swagger-ui/index.html
 This project is licensed under the MIT License.
 
 ```
-
----
-
-### ✅ What’s Next?
-
-I can now:
-- Save this as your `README.md` file in the project.
-- Help generate the screenshots automatically or suggest how you can take them quickly.
