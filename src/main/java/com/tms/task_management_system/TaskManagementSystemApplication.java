@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.env.Environment;
 
 import java.util.Arrays;
 
 @SpringBootApplication
+@EnableAspectJAutoProxy
 public class TaskManagementSystemApplication implements CommandLineRunner {
 
 	private final TaskService taskService;
@@ -28,7 +30,6 @@ public class TaskManagementSystemApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		// 👇 Skip CLI if active profile is "test"
 		if (Arrays.asList(environment.getActiveProfiles()).contains("test")) {
 			return;
 		}
