@@ -10,8 +10,7 @@
 
 ## 📌 Overview
 
-A modular, clean, and testable **Task Management System** built using **Java + Spring Boot**, supporting both **REST API** and **Command-Line Interface (CLI)** to create, update, delete, and list tasks using **in-memory storage**.
-
+This project is a modular and testable **Task Management System** built using **Java** and **Spring Boot**. It allows users to manage tasks (create, update, delete, list) with **in-memory** storage. It supports **REST APIs** and **Command-Line Interface (CLI)** for task manipulation, and includes proper *logging*, *exception handling*, and *unit testing*.
 ---
 
 ## 🚀 Features
