@@ -75,12 +75,13 @@ src/
 
 ## 📚 Tech Stack
 
-- Java 11+
-- Spring Boot 2.7.6
+- Java 17
+- Spring Boot 3.3.12
 - Maven
 - JUnit 5
 - Swagger UI (OpenAPI)
 - SLF4J + Logback
+- AOP 
 
 ---
 
