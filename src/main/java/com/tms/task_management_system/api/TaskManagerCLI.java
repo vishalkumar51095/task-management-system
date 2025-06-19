@@ -1,6 +1,5 @@
 package com.tms.task_management_system.api;
 
-
 import com.tms.task_management_system.model.Priority;
 import com.tms.task_management_system.model.Status;
 import com.tms.task_management_system.model.Task;
@@ -15,148 +14,154 @@ import java.util.Scanner;
 
 public class TaskManagerCLI {
 
-
     private final TaskService service;
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
     private static final Logger logger = LoggerFactory.getLogger(TaskManagerCLI.class);
 
     public TaskManagerCLI(TaskService service) {
         this.service = service;
+        this.scanner = new Scanner(System.in);
     }
 
     public void run() {
+        logger.info("Task Manager CLI started.");
         while (true) {
-            System.out.println("\nTask Manager Options:\n1. Create\n2. Update\n3. Delete\n4. List\n5. Exit");
-            switch (scanner.nextLine().trim()) {
-                case "1": create(); break;
-                case "2": update(); break;
-                case "3": delete(); break;
-                case "4": list(); break;
-                case "5": return;
-                default: System.out.println("Invalid input.");
+            try {
+                System.out.println("\nTask Manager Options:\n1. Create\n2. Update\n3. Delete\n4. List\n5. Exit");
+                switch (scanner.nextLine().trim()) {
+                    case "1": create(); break;
+                    case "2": update(); break;
+                    case "3": delete(); break;
+                    case "4": list(); break;
+                    case "5":
+                        logger.info("Task Manager CLI exited.");
+                        return;
+                    default:
+                        logger.warn("Invalid menu option selected.");
+                }
+            } catch (Exception e) {
+                logger.error("Unexpected error in main loop", e);
             }
         }
     }
 
     private void create() {
         try {
-            logger.info("Creating a new task");
+            logger.info("Creating a new task...");
 
-            System.out.print("Title: ");
-            String title = scanner.nextLine();
-            System.out.print("Description: ");
-            String desc = scanner.nextLine();
-            System.out.print("Due Date (yyyy-mm-dd or blank): ");
-            String dateStr = scanner.nextLine();
-            LocalDate date = dateStr.isEmpty() ? null : LocalDate.parse(dateStr);
-            System.out.print("Priority (LOW, MEDIUM, HIGH): ");
-            Priority priority = Priority.valueOf(scanner.nextLine().toUpperCase());
-            System.out.print("Status (PENDING, IN_PROGRESS, COMPLETED): ");
-            Status status = Status.valueOf(scanner.nextLine().toUpperCase());
+            String title = prompt("Title");
+            String desc = prompt("Description");
+            LocalDate dueDate = parseOptionalDate(prompt("Due Date (yyyy-mm-dd or blank)")).orElse(null);
+            Priority priority = parseEnum(Priority.class, prompt("Priority (LOW, MEDIUM, HIGH)"));
+            Status status = parseEnum(Status.class, prompt("Status (PENDING, IN_PROGRESS, COMPLETED)"));
 
-            Task task = service.createTask(title, desc, date, priority, status);
-            System.out.println("Task Created: " + task);
-            logger.info("Task created with ID: {}", task.getId());
+            Task task = service.createTask(title, desc, dueDate, priority, status);
+            logger.info("Task created successfully with ID: {}", task.getId());
+
+        } catch (IllegalArgumentException e) {
+            logger.warn("Invalid input provided while creating task: {}", e.getMessage());
         } catch (Exception e) {
-            logger.error("Error while creating task", e);
-            System.out.println("Error: " + e.getMessage());
+            logger.error("Failed to create task", e);
         }
     }
-
 
     private void update() {
-        logger.info("Updating a task");
+        try {
+            logger.info("Updating a task...");
 
-        System.out.print("Task ID: ");
-        String id = scanner.nextLine();
+            String id = prompt("Task ID");
 
-        Optional<Task> updatedTask = service.updateTask(id,
-                prompt("Title"), prompt("Description"),
-                parseDate(prompt("Due Date (yyyy-mm-dd)")),
-                parseEnum(Priority.class, prompt("Priority")),
-                parseEnum(Status.class, prompt("Status"))
-        );
+            Optional<Task> updatedTask = service.updateTask(id,
+                    prompt("Title"), prompt("Description"),
+                    parseOptionalDate(prompt("Due Date (yyyy-mm-dd or blank)")).orElse(null),
+                    parseOptionalEnum(Priority.class, prompt("Priority (LOW, MEDIUM, HIGH)")).orElse(null),
+                    parseOptionalEnum(Status.class, prompt("Status (PENDING, IN_PROGRESS, COMPLETED)")).orElse(null)
+            );
 
-        if (updatedTask.isPresent()) {
-            System.out.println("Updated: " + updatedTask.get());
-            logger.info("Task updated successfully with ID: {}", id);
-        } else {
-            System.out.println("Task not found");
-            logger.warn("Attempted to update non-existing task with ID: {}", id);
+            if (updatedTask.isPresent()) {
+                logger.info("Task updated with ID: {}", id);
+            } else {
+                logger.warn("Task not found with ID: {}", id);
+            }
+
+        } catch (IllegalArgumentException e) {
+            logger.warn("Invalid input provided while updating task: {}", e.getMessage());
+        } catch (Exception e) {
+            logger.error("Failed to update task", e);
         }
     }
 
-
     private void delete() {
-        logger.info("Deleting a task");
+        try {
+            logger.info("Deleting a task...");
 
-        System.out.print("Task ID: ");
-        String id = scanner.nextLine();
+            String id = prompt("Task ID");
+            boolean deleted = service.deleteTask(id);
 
-        boolean deleted = service.deleteTask(id);
-        if (deleted) {
-            System.out.println("Deleted.");
-            logger.info("Task deleted successfully with ID: {}", id);
-        } else {
-            logger.warn("Attempted to delete non-existing task with ID: {}", id);
+            if (deleted) {
+                logger.info("Task deleted with ID: {}", id);
+            } else {
+                logger.warn("Delete failed. No task with ID: {}", id);
+            }
+
+        } catch (Exception e) {
+            logger.error("Failed to delete task", e);
         }
     }
 
     private void list() {
-        logger.info("Starting task list operation");
+        try {
+            logger.info("Listing tasks...");
 
-        System.out.print("Filter Status (blank for none): ");
-        Optional<Status> status = parseOptionalEnum(Status.class, scanner.nextLine());
+            Optional<Status> status = parseOptionalEnum(Status.class, prompt("Filter Status (blank for none)"));
+            Optional<Priority> priority = parseOptionalEnum(Priority.class, prompt("Filter Priority (blank for none)"));
+            Optional<LocalDate> fromDate = parseOptionalDate(prompt("From Due Date (yyyy-mm-dd or blank)"));
+            Optional<LocalDate> toDate = parseOptionalDate(prompt("To Due Date (yyyy-mm-dd or blank)"));
 
-        System.out.print("Filter Priority (blank for none): ");
-        Optional<Priority> priority = parseOptionalEnum(Priority.class, scanner.nextLine());
+            String sortByInput = prompt("Sort By (blank, duedate, priority, duedate_priority)");
+            Optional<String> sortBy = sortByInput.isBlank() ? Optional.empty() : Optional.of(sortByInput.trim().toLowerCase());
 
-        System.out.print("From Due Date (yyyy-mm-dd or blank): ");
-        Optional<LocalDate> fromDate = parseOptionalDate(scanner.nextLine());
+            List<Task> tasks = service.listTasks(status, priority, fromDate, toDate, sortBy);
 
-        System.out.print("To Due Date (yyyy-mm-dd or blank): ");
-        Optional<LocalDate> toDate = parseOptionalDate(scanner.nextLine());
+            if (tasks.isEmpty()) {
+                logger.info("No tasks found.");
+                System.out.println("⚠ No tasks found.");
+            } else {
+                logger.info("Found {} task(s)", tasks.size());
+                tasks.forEach(System.out::println);
+            }
 
-        System.out.print("Sort By (blank, duedate, priority, duedate_priority): ");
-        String sortInput = scanner.nextLine().trim();
-        Optional<String> sortBy = sortInput.isEmpty() ? Optional.empty() : Optional.of(sortInput.toLowerCase());
-
-        logger.debug("Filters - Status: {}, Priority: {}, From: {}, To: {}, SortBy: {}",
-                status.orElse(null), priority.orElse(null), fromDate.orElse(null), toDate.orElse(null), sortBy.orElse("none"));
-
-        List<Task> tasks = service.listTasks(status, priority, fromDate, toDate, sortBy);
-
-        if (tasks.isEmpty()) {
-            logger.info("No tasks found with the given filters.");
-        } else {
-            tasks.forEach(System.out::println);
-            logger.debug("Listed tasks: {}", tasks.size());
+        } catch (Exception e) {
+            logger.error("Failed to list tasks", e);
         }
-
-
-        logger.info("Task list operation completed. Found {} task(s).", tasks.size());
     }
-
 
     private String prompt(String label) {
         System.out.print(label + ": ");
-        return scanner.nextLine();
+        return scanner.nextLine().trim();
     }
 
     private LocalDate parseDate(String input) {
-        return input.isEmpty() ? null : LocalDate.parse(input);
-    }
-
-    private <T extends Enum<T>> T parseEnum(Class<T> clazz, String input) {
-        return Enum.valueOf(clazz, input.toUpperCase());
-    }
-
-    private <T extends Enum<T>> Optional<T> parseOptionalEnum(Class<T> clazz, String input) {
-        return input.isEmpty() ? Optional.empty() : Optional.of(parseEnum(clazz, input));
+        return LocalDate.parse(input.trim());
     }
 
     private Optional<LocalDate> parseOptionalDate(String input) {
-        return input.isEmpty() ? Optional.empty() : Optional.of(LocalDate.parse(input));
+        try {
+            return input.isBlank() ? Optional.empty() : Optional.of(LocalDate.parse(input.trim()));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid date format. Use yyyy-MM-dd.");
+        }
+    }
+
+    private <T extends Enum<T>> T parseEnum(Class<T> clazz, String input) {
+        try {
+            return Enum.valueOf(clazz, input.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid " + clazz.getSimpleName() + " value.");
+        }
+    }
+
+    private <T extends Enum<T>> Optional<T> parseOptionalEnum(Class<T> clazz, String input) {
+        return input.isBlank() ? Optional.empty() : Optional.of(parseEnum(clazz, input));
     }
 }
-
