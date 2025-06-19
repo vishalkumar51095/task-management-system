@@ -38,6 +38,7 @@ src/
 ├── cli/                   # CLI interface
 ├── exception/             # Custom exceptions and handler
 └── test/                  # JUnit test classes
+└── aop/                   # AOP classes
 
 ````
 
@@ -160,7 +161,7 @@ http://localhost:8080/swagger-ui/index.html
 ## 🤝 Author
 
 **Vishal Kumar**
-🌐 [LinkedIn](https://linkedin.com/in/vishal-kumar) | 📧 [vishalkumar8299308385@gmail.com](mailto:vishalkumar8299308385@gmail.com)
+🌐 [LinkedIn](https://linkedin.com/in/vishalkumar51095) | 📧 [vishalkumar51095@gmail.com](mailto:vishalkumar51095@gmail.com)
 
 ---
 
@@ -177,6 +178,3 @@ This project is licensed under the MIT License.
 I can now:
 - Save this as your `README.md` file in the project.
 - Help generate the screenshots automatically or suggest how you can take them quickly.
-
-Would you like this saved to your project now?
-```
