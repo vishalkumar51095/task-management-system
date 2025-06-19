@@ -44,6 +44,28 @@ src/
 
 ---
 
+## 📦 Package Overview
+
+| Package      | Class/File                           | Description                                                                                    |
+| ------------ | ------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| `model`      | `Task.java`                          | The main entity containing fields like ID, title, description, due date, priority, and status. |
+|              | `Priority.java`                      | Enum for task priority – LOW, MEDIUM, HIGH.                                                    |
+|              | `Status.java`                        | Enum for task status – PENDING, IN_PROGRESS, COMPLETED.                                       |
+| `dto`        | `TaskDto.java`                       | Data Transfer Object used to receive and return task data.                                     |
+| `repository` | `TaskRepository.java`                | Interface defining repository operations.                                                      |
+|              | `TaskRepositoryImpl.java`            | Concrete in-memory implementation of the repository.                                           |
+| `service`    | `TaskService.java`                   | Interface for business logic.                                                                  |
+|              | `TaskServiceImplementation.java`     | Implements business logic including validation and filters.                                    |
+| `api`        | `TaskController.java`                | REST Controller exposing endpoints for CRUD operations and task listing.                       |
+| `cli`        | `TaskManagerCLI.java`                | CLI runner allowing task operations from the terminal.                                         |
+| `exception`  | `GlobalExceptionHandler.java`        | Centralized error handler for REST API.                                                        |
+|              | `TaskNotFoundException.java`         | Custom exception thrown when task is not found.                                                |
+|              | `InvalidSortParameterException.java` | Custom exception for invalid sorting.                                                          |
+| `test`       | `TaskServiceImplementationTest.java` | Unit tests for task service logic.                                                             |
+|              | `TaskManagerCLITest.java`            | Unit tests for CLI behavior (mocked I/O).                                                      |
+
+---
+
 ## 🧠 Core Functionalities
 
 ### ✅ Create Task  
