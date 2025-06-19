@@ -1,249 +1,195 @@
-📘 Task Management System – Java Coding Assignment
+Great feedback, Vishal! Let’s make your `README.md` more **attractive, modern, and developer-friendly** using:
 
-📄 Overview
+* Emojis 🎯
+* Badges 🚀
+* Code formatting 🧑‍💻
+* Section collapses ⬇️ (where supported)
+* Cleaner layout 🧼
 
-This project is a modular and testable Task Management System built using Java. It allows users to manage tasks (create, update, delete, list) with in-memory storage. It supports REST APIs and Command-Line Interface (CLI) for task manipulation, and includes proper logging, exception handling, and unit testing.
+---
 
-📆 Project Structure
+### 🔥 Here's the **updated, improved, and visually appealing** `README.md`:
 
-Package
+```markdown
+# 📝 Task Management System - Java Spring Boot
 
-Class/File
+![Java](https://img.shields.io/badge/Java-11+-brightgreen?logo=java)  
+![Spring Boot](https://img.shields.io/badge/Spring--Boot-2.7.6-blue?logo=springboot)
+![Swagger](https://img.shields.io/badge/API-Documented-orange?logo=swagger)
+![JUnit](https://img.shields.io/badge/Tested-JUnit5-yellow)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
 
-Description
+---
 
-model
+## 📌 Overview
 
-Task.java
+A modular, clean, and testable **Task Management System** built using **Java + Spring Boot**, supporting both **REST API** and **Command-Line Interface (CLI)** to create, update, delete, and list tasks using **in-memory storage**.
 
-The main entity containing fields like ID, title, description, due date, priority, and status.
+---
 
+## 🚀 Features
 
+- 🔗 REST API (Postman & Swagger support)
+- 💻 CLI for terminal interaction
+- 💾 In-memory storage (no DB needed)
+- ✅ Unit tests using JUnit
+- ⚠️ Global exception handling
+- 📜 Proper structured logging
+- ✨ Clean Code using Java 8+ features
 
-Priority.java
+---
 
-Enum for task priority – LOW, MEDIUM, HIGH.
+## 🧩 Project Structure
 
+```
 
+src/
+├── model/                 # Enums & Task entity
+├── dto/                   # Task DTO
+├── repository/            # TaskRepository interface & impl
+├── service/               # Business logic
+├── api/                   # REST Controller
+├── cli/                   # CLI interface
+├── exception/             # Custom exceptions and handler
+└── test/                  # JUnit test classes
 
-Status.java
+````
 
-Enum for task status – PENDING, IN_PROGRESS, COMPLETED.
+---
 
-dto
+## 🧠 Core Functionalities
 
-TaskDto.java
+### ✅ Create Task  
+- `POST /tasks`  
+- CLI: `create`  
+![Create Task](screenshots/create_task_swagger.png)
 
-Data Transfer Object used to receive and return task data.
+---
 
-repository
+### ✏️ Update Task  
+- `PUT /tasks/{id}`  
+- CLI: `update`  
+![Update Task](screenshots/update_task.png)
 
-TaskRepository.java
+---
 
-Interface defining repository operations.
+### ❌ Delete Task  
+- `DELETE /tasks/{id}`  
+- CLI: `delete`  
+![Delete Task](screenshots/delete_task.png)
 
+---
 
+### 📋 List Tasks  
+- `GET /tasks?status=&priority=&fromDate=&toDate=&sortBy=`  
+- CLI: `list`  
+![List Tasks](screenshots/list_tasks.png)
 
-TaskRepositoryImpl.java
+---
 
-Concrete in-memory implementation of the repository.
+## 📚 Tech Stack
 
-service
+- Java 11+
+- Spring Boot 2.7.6
+- Maven
+- JUnit 5
+- Swagger UI (OpenAPI)
+- SLF4J + Logback
 
-TaskService.java
+---
 
-Interface for business logic.
+## 🧪 Testing
 
+```bash
+mvn test
+````
 
+* `TaskServiceImplementationTest` ✅
+* `TaskManagerCLITest` ✅
 
-TaskServiceImplementation.java
+📸 ![Test Result](screenshots/test_results.png)
 
-Implements business logic including validation and filters.
+---
 
-api
+## 🔐 Error Handling
 
-TaskController.java
+* Custom Exceptions:
 
-REST Controller exposing endpoints for CRUD operations and task listing.
+  * `TaskNotFoundException`
+  * `InvalidSortParameterException`
+* Centralized via `GlobalExceptionHandler`
+  📸 ![Error Handling](screenshots/exception_example.png)
 
-cli
+---
 
-TaskManagerCLI.java
+## 🛠️ How to Run
 
-CLI runner allowing task operations from the terminal.
-
-exception
-
-GlobalExceptionHandler.java
-
-Centralized error handler for REST API.
-
-
-
-TaskNotFoundException.java
-
-Custom exception thrown when task is not found.
-
-
-
-InvalidSortParameterException.java
-
-Custom exception for invalid sorting.
-
-test
-
-TaskServiceImplementationTest.java
-
-Unit tests for task service logic.
-
-
-
-TaskManagerCLITest.java
-
-Unit tests for CLI behavior (mocked I/O).
-
-✅ Core Features
-
-🔹 1. Create Task
-
-Endpoint: POST /tasks
-
-CLI: create
-
-Fields: ID (auto), title, description, due date, priority, status
-
-📸 Screenshot: 
-
-🔹 2. Update Task
-
-Endpoint: PUT /tasks/{id}
-
-CLI: update
-
-Allows modification of title, description, due date, priority, status
-
-📸 Screenshot: 
-
-🔹 3. Delete Task
-
-Endpoint: DELETE /tasks/{id}
-
-CLI: delete
-
-📸 Screenshot: 
-
-🔹 4. List Tasks
-
-Endpoint: GET /tasks
-
-CLI: list
-
-Supports filtering by:
-
-Status
-
-Priority
-
-Due date range
-
-Sorting by priority or dueDate
-
-📸 Screenshot: 
-
-🛠️ Additional Features
-
-Swagger UI for easy REST API testing📸 
-
-Command-Line Interface📸 
-
-Exception Handling using @ControllerAdvice📸 
-
-JUnit Testing with AssertJ/Mockito📸 
-
-Logging with SLF4J + LogbackLogs actions and errors meaningfully.
-
-🤪 How to Run
-
-▶ Run the Application
-
-Clone the repository:
-
+```bash
 git clone https://github.com/yourusername/task-management-system.git
 cd task-management-system
 
-Build the project:
-
+# Build the project
 mvn clean install
 
-Run using CLI:
-
+# Run the application
 java -jar target/task-management-system.jar
+```
 
-Access Swagger UI at:
+🌐 Access Swagger UI:
 
+```
 http://localhost:8080/swagger-ui/index.html
+```
 
-🧪 Testing
+---
 
-Run all tests using:
+## 🔮 Future Enhancements
 
-mvn test
+* 🧵 Async & Multithreading support
+* 🐳 Dockerize the project
+* ☁ Deploy to Render or Railway
+* 🔐 OAuth2 / Okta Integration for Authentication
+* 🌐 Add a Web Frontend (React/Vue)
+* 🗃️ Use PostgreSQL/MySQL for persistence
 
-TaskServiceImplementationTest: Tests business logic including validation, filtering.
+---
 
-TaskManagerCLITest: Tests CLI commands using simulated user input.
+## 📸 Screenshots
 
-📸 
+> Put the following images inside `screenshots/` folder in the root:
 
-🛠️ Technologies Used
+* `create_task_swagger.png`
+* `update_task.png`
+* `delete_task.png`
+* `list_tasks.png`
+* `swagger_ui.png`
+* `cli_example.png`
+* `exception_example.png`
+* `unit_testing.png`
+* `test_results.png`
 
-Java 11+
+---
 
-Maven
+## 🤝 Author
 
-Spring Boot
+**Vishal Kumar**
+🌐 [LinkedIn](https://linkedin.com/in/vishal-kumar) | 📧 [vishalkumar8299308385@gmail.com](mailto:vishalkumar8299308385@gmail.com)
 
-JUnit 5
+---
 
-Swagger (Springfox/OpenAPI)
+## 📜 License
 
-SLF4J + Logback
+This project is licensed under the MIT License.
 
-Optional: Mockito for mocking in tests
+```
 
-🔮 Future Enhancements
+---
 
-🧵 Multithreading (Async task execution)
+### ✅ What’s Next?
 
-🐳 Dockerize for container deployment
+I can now:
+- Save this as your `README.md` file in the project.
+- Help generate the screenshots automatically or suggest how you can take them quickly.
 
-☁ Deploy on Render.com or any cloud platform
-
-🔐 Integrate Okta or Spring Security for user authentication
-
-🎨 Frontend (React/Vue/Angular) for web UI
-
-📃 Database support (PostgreSQL/MySQL) for persistence
-
-📷 Screenshots
-
-Add the following screenshots in a folder named screenshots/ in your repo and reference them in README.
-
-create_task_swagger.png
-
-update_task.png
-
-delete_task.png
-
-list_tasks.png
-
-swagger_ui.png
-
-cli_example.png
-
-exception_example.png
-
-unit_testing.png
-
-test_results.png
-
+Would you like this saved to your project now?
+```
