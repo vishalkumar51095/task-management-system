@@ -1,16 +1,3 @@
-Great feedback, Vishal! Let’s make your `README.md` more **attractive, modern, and developer-friendly** using:
-
-* Emojis 🎯
-* Badges 🚀
-* Code formatting 🧑‍💻
-* Section collapses ⬇️ (where supported)
-* Cleaner layout 🧼
-
----
-
-### 🔥 Here's the **updated, improved, and visually appealing** `README.md`:
-
-```markdown
 # 📝 Task Management System - Java Spring Boot
 
 ![Java](https://img.shields.io/badge/Java-11+-brightgreen?logo=java)  
